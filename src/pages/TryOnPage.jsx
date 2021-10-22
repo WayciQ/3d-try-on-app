@@ -4,10 +4,10 @@ import '../style/TryOn.style.css';
 
 import {
     IntializeEngine, IntializeThreejs
-} from './render.js';
+} from '../_common/render.js';
 
 
-export const TryOn = () => {
+export const TryOnPage = () => {
 
     useEffect(() => {
 
