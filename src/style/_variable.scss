@@ -1,0 +1,17 @@
+$colors: (
+    red:#ed254e,
+    light:#fff,
+    yellow:#f9dc5c,
+    green:#c2eabd,
+    blue:#011936,
+    gray: #465362,
+    black: #000,
+);
+
+@function setColor($color) {
+    @if map-has-key($colors, $color) {
+      @return map-get($colors, $color);
+    } @else {
+      @return $color;
+    }
+  }

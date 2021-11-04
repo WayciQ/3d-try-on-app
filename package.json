@@ -1,8 +1,8 @@
 {
-  "name": "basic-virtual-tryon-glasses",
+  "name": "virtual-tryon",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://alperenuzun.github.io/basic-virtual-tryon-glasses",
+  "homepage": "",
   "dependencies": {
     "@tensorflow-models/facemesh": "0.0.1",
     "@tensorflow/tfjs-converter": "^1.7.2",
@@ -13,6 +13,7 @@
     "antd": "^4.16.13",
     "clmtrackr": "^1.1.2",
     "helmet": "^3.21.3",
+    "history": "^5.0.1",
     "iframe": "^1.0.0",
     "pubsub": "^3.2.1",
     "pubsub-js": "^1.8.0",
@@ -20,9 +21,11 @@
     "react-dom": "^16.13.0",
     "react-dropdown": "^1.6.4",
     "react-resize-detector": "^4.2.1",
+    "react-router-dom": "^5.3.0",
     "react-scripts": "3.4.0",
     "react-threejs": "0.0.3",
     "sass": "^1.26.2",
+    "scss": "^0.2.4",
     "three": "^0.113.2"
   },
   "scripts": {

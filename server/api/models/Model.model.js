@@ -19,6 +19,10 @@ const ModelSchema = new Schema({
         type: String,
         trim: true
     },
+    ModelDescription: {
+        type: String,
+        trim: true
+    },
     ModelObj:{
         type: Object
     },

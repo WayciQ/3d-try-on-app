@@ -16,8 +16,8 @@ let camera;
 var container;
 let scene;
 let videoSprite;
-let windowWidth = 640;
-let windowHeight = 480;
+let windowWidth = 849;
+let windowHeight = 784;
 
 function setVideoContent(){
     camera = new THREE.PerspectiveCamera(50, video.videoWidth / video.videoHeight, 1, 5000);
