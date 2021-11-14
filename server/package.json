@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "nodedemon server.js"
   },
   "keywords": [],
   "author": "",
@@ -13,11 +13,13 @@
   "dependencies": {
     "bcrypt": "^4.0.1",
     "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.16.4",
     "express-winston": "^4.0.5",
     "firebase-admin": "^9.7.0",
     "ftp-client": "^0.2.2",
+    "http-status": "^1.5.0",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.1",
     "mongoose": "^5.2.18",
@@ -28,8 +30,8 @@
     "node-cron": "^3.0.0",
     "node-fetch": "^2.6.1",
     "nodemailer": "^6.4.13",
+    "nodemon": "^2.0.15",
     "winston": "^3.3.3",
-    "cors": "^2.8.5",
     "winston-loggly-bulk": "^3.1.1"
   }
 }

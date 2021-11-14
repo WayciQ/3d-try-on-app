@@ -66,7 +66,7 @@ function setTheLights(){
     scene.add(lightAmb);
 }
 
-function setGlassesToScene(objName){
+function setObjToScene(objName){
 
     var mtlLoader = new MTLLoader();
     mtlLoader.setMaterialOptions({side:THREE.DoubleSide});
@@ -108,7 +108,7 @@ export function IntializeThreejs(objName) {
 
     getFaceMask();
     
-    setGlassesToScene(objName);
+    setObjToScene(objName);
 
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
     renderer.setPixelRatio(window.devicePixelRatio);

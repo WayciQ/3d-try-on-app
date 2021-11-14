@@ -4,7 +4,8 @@ import {
     IntializeEngine, IntializeThreejs
 } from '../_common/render.js';
 import {Row, Col} from 'antd';
-import { Header, Footer, Body, TabsSelect, PictureWall } from '../components';
+import { Header, Footer, Body, TabsSelect, PictureWall, DetailModel } from '../components';
+// import captureWebsite from 'capture-website';
 
 export const TryOnPage = () => {
     async function init() {
@@ -21,12 +22,18 @@ export const TryOnPage = () => {
 
         video.oncanplay = (e) => {
             video.play();
-            IntializeThreejs("Sunglasses2");
+            IntializeThreejs("purple1");
             IntializeEngine();
         }
     }
     const handleChange = () => {
         init();
+    }
+
+    const handleCapture = async () => {
+        // await captureWebsite.file('https://sindresorhus.com', 'screenshot.png');
+        alert("take photo");
+        
     }
     return (
         <>
@@ -46,8 +53,11 @@ export const TryOnPage = () => {
                        
                     </Col>
                     <Col offset={1} span={3}>
-                        <button className='primary btn'>Take photo</button> <br/>
-                        <PictureWall />
+                        <div>
+                            <DetailModel name="Glassed" descripte="Kinh cho nguoi mu" color="Blue"/>
+                            <button onClick={handleCapture} className='primary btn'>Take photo</button>
+                            <PictureWall />
+                        </div>
                     </Col>
                 </Row>
             </Body>

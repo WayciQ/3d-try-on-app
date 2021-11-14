@@ -12,6 +12,7 @@ export const Header = () => {
                 <Row className="menu-list" justify="start" align='bottom'>
                     <NavLink  className="menu-item" activeClassName="menu-item active" id='ModelManagerPage' to="/ModelManagerPage">Model Manager</NavLink>
                     <NavLink  className="menu-item" activeClassName="menu-item active" id='TryOnPage' to="/TryOnPage">TryOn</NavLink>
+                    <NavLink  className="menu-item" activeClassName="menu-item active" id='Blank' to="/Blank">Blank</NavLink>
                 </Row>
             </Col>
         </Row>

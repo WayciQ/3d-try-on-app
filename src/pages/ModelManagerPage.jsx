@@ -1,9 +1,8 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { Header, Footer, Body, TabsSelect, ModelForm } from '../components';
 import {Row, Col, Form, Upload, Input} from 'antd';
 export const ModelManagerPage = () => {
-
-
+    
     return(
         <>
             <Header/>

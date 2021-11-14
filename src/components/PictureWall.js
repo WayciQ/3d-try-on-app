@@ -41,8 +41,6 @@ export const PictureWall = () => {
     const [previewImage, setPreviewImage] = useState('');
     const [previewTitle, setPreviewTitle] = useState('');
     const [fileList, setFileList] = useState(fileListData);
-
-    
     const handleCancel = () => setPreviewVisible(false);
     const handleChange = ({ fileList }) => setFileList({ fileList });
     const handlePreview = async file => {

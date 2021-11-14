@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import {Row, Col, Form, Upload, Input, Button} from 'antd';
+import { displayModelToScence } from '../_common/displayModel';
 const formItemLayout = {
     labelCol: {
       span: 6,
@@ -18,7 +19,16 @@ const normFile = (e) => {
     return e && e.fileList;
   };
 export const ModelForm = () => {
-
+    
+    const handleSave = () => {
+        displayModelToScence("purple1");
+    }
+    const handleCancel = () => {
+        displayModelToScence("Sunglasses2");
+    }
+    const handleDelete = () => {
+        displayModelToScence("untitled");
+    }
     return(
         <div className="form-container">
             <Row>
@@ -78,15 +88,13 @@ export const ModelForm = () => {
                     </Form>
                 </Col>
                 <Col span={10} offset={2}>
-                    <div className="demo-item">
-
-                    </div>
+                    <div className="demo-item" id="demo"> </div>
                 </Col>
             </Row>
             <Row justify='end'>
-                <button className='btn primary'>Save</button>
-                <button className='btn secondary'>Delete</button>
-                <button className='btn primary'>Cancel</button>
+                <button className='btn primary' onClick={handleSave}>Save</button>
+                <button className='btn secondary' onClick={handleDelete}>Delete</button>
+                <button className='btn primary' onClick={handleCancel}>Cancel</button>
             </Row>
         </div>
     )

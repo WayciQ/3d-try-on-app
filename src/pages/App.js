@@ -6,6 +6,7 @@ import ErrorBoundary from '../_helpers/ErrorBoundary';
 // const ModelManagerPage = withRouter(lazy(() => import('../pages/ModelManagerPage')));
 import {TryOnPage} from './TryOnPage';
 import {ModelManagerPage} from './ModelManagerPage';
+import { Blank } from './Blank';
 export default class App extends Component {
 
   render() {
@@ -20,6 +21,7 @@ export default class App extends Component {
                     <Route exact path='/' component={TryOnPage} />
                     <Route exact path='/TryOnPage' component={TryOnPage} />
                     <Route exact path='/ModelManagerPage' component={ModelManagerPage} />
+                    <Route exact path='/Blank' component={Blank} />
                   </Switch>
                 </BrowserRouter>
               </Suspense>
