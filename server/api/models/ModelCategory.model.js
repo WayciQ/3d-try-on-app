@@ -7,16 +7,12 @@ mongoose.Promise = global.Promise;
 autoIncrement.Promise = global.Promise;
 
 const ModelCategorySchema = new Schema({
-    ModelCategoryCode: {
-        type: String,
-        trim: true
-    },
     ModelCategoryName: {
         type: String,
         trim: true
     },
-    ModelCategoryStatus: {
-        type: Number,
+    ModelCategoryDescription: {
+        type: String,
         trim: true
     }
 });

@@ -1,7 +1,3 @@
-import React from 'react'
-import { Header, Footer, Body, TabsSelect, ModelForm } from '../components';
-import {Row, Col} from 'antd';
-
 const data = {
     ModelName: 123123,
     ModelCategory: 123123,
@@ -58,24 +54,3 @@ const data = {
         }
     ]
 }
-export const ModelManagerPage = () => {
-    
-    return(
-        <>
-            <Header/>
-            <Body>
-                <Row className="container" justify="space-between">
-                        <Col span={8}>
-                            <TabsSelect haveAddCategory={true}/>
-                        </Col>
-                        <Col span={15} offset={1}>
-                            <ModelForm dataModel={data}/>
-                        </Col>
-                </Row>
-            </Body>
-            <Footer/>
-        </>
-    )
-}
-
-

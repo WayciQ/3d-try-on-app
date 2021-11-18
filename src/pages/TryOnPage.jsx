@@ -1,5 +1,4 @@
 import React from 'react';
-import { useEffect } from 'react';
 import {
     IntializeEngine, IntializeThreejs
 } from '../_common/render.js';

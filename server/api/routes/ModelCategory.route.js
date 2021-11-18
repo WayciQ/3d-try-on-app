@@ -1,5 +1,13 @@
 module.exports = function (app) {
-	const ImportFile = require('../controllers/ModelManager.controller');
-	app.route('/importToHell')
-		.post(ImportFile.importToFile);
+	const ModelCategory = require('../controllers/ModelCategory.controller');
+	app.route('/ModelCategory/FindbyId')
+		.get(ModelCategory.FindbyId);
+	app.route('/ModelCategory/FindAll')
+		.get(ModelCategory.FindAll);
+	app.route('/ModelCategory/create')
+		.post(ModelCategory.Create);
+	app.route('/ModelCategory/update')
+		.post(ModelCategory.Update);
+	app.route('/ModelCategory/delete')
+		.post(ModelCategory.Delete);
 }

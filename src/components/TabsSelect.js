@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Col, Tabs } from 'antd';
+import { Tabs } from 'antd';
 import { Card } from './Card'
 import { ModelCategoryForm } from './ModelCategoryForm';
 const { TabPane } = Tabs;

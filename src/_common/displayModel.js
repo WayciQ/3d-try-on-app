@@ -2,7 +2,6 @@ import * as THREE from 'three';
 import {MTLLoader} from 'three/examples/jsm/loaders/MTLLoader';
 import {OBJLoader} from 'three/examples/jsm/loaders/OBJLoader';
 import {OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import Stats from 'three/examples/jsm/libs/stats.module.js';
 var modelObj;
 let renderer;
 let camera;
@@ -53,11 +52,11 @@ function setTheLights(){
     scene.add(lightAmb);
 }
 
-window.onresize = function () {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize( window.innerWidth, window.innerHeight );
-};
+// window.onresize = function () {
+//     camera.aspect = window.innerWidth / window.innerHeight;
+//     camera.updateProjectionMatrix();
+//     renderer.setSize( window.innerWidth, window.innerHeight );
+// };
 
 export function displayModelToScence(objName) {
 

@@ -7,10 +7,6 @@ mongoose.Promise = global.Promise;
 autoIncrement.Promise = global.Promise;
 
 const ModelSchema = new Schema({
-    ModelCode: {
-        type: String,
-        trim: true
-    },
     ModelName: {
         type: String,
         trim: true
@@ -31,14 +27,10 @@ const ModelSchema = new Schema({
     },
     ModelMaterial: {
         type: Object
-    },
-    ModelStatus: {
-        type: Number,
-        trim: true
     }
 });
 
-ModelSchema.virtual('ModelCategory', {
+ModelSchema.virtual('ModelCategoryObject', {
     ref:'ModelCategory',
     localField:'ModelCategory',
     foreignField:'ModelCategoryCode',
