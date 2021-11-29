@@ -20,13 +20,13 @@ const ModelSchema = new Schema({
         trim: true
     },
     ModelObj:{
-        type: Object
+        type: Object,
     },
     ModelMtl: {
-        type: Object
+        type: Object,
     },
     ModelMaterial: {
-        type: Object
+        type: Object,
     }
 });
 

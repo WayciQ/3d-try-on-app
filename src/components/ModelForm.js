@@ -1,10 +1,9 @@
 import React, {useState,useEffect} from 'react';
 import {Row, Col, Form, Upload, Input, Button, message} from 'antd';
-import axios from 'axios';
-import { displayModelToScence } from '../_common/displayModel';
-import {ModelService} from '../_services/Model.service'
 import {MODEL} from '../_common/constains.common'
-
+import { useDispatch, useSelector } from 'react-redux';
+import { createModelAction, deleteModelAction, findAllAction, cancelModelAction } from '../redux/action';
+import {cancelDisplayModel} from "../_common/displayModel"
 const formItemLayout = {
     labelCol: {
       span: 6,
@@ -22,37 +21,39 @@ function getBase64(file) {
       reader.onerror = error => reject(error);
     });
   }
-export const ModelForm = ({dataModel}) => {
+
+  
+export const ModelForm = () => {
     
     const [form] = Form.useForm();
-    const [mode, setMode] = useState('new');
-    const [modelName, setModelName] = useState('');
-    const [modelCategory, setModelCategory] = useState('');
-    const [modelDescription, setModelDescription] = useState('');
-    const [fileObj, setFileObj] = useState(false);
-    const [fileMtl, setFileMtl] = useState(false);
-    const [fileMaterial, setFileMaterial] = useState(null);
+    const [mode, setMode] = useState(false);
+    const [fileObj, setFileObj] = useState({});
+    const [fileMtl, setFileMtl] = useState({});
+    const [fileMaterial, setFileMaterial] = useState({});
+    const {model,isUpdate} = useSelector(state => state.ModelReducer);
+    const dispatch = useDispatch();
     // display by props
     useEffect(() => {
         handleDisplayValue();
-    })
+    },[model])
+
+    
     const handleDisplayValue = () => {
-        if(!!dataModel){
-            setMode('update')
-            form.setFieldsValue({
-                Model: {
-                    ModelName: dataModel.ModelName,
-                    ModelCategory: dataModel.ModelCategory,
-                    ModelDescription: dataModel.ModelDescription,
-                    ModelObj:dataModel.ModelObj,
-                    ModelMtl: dataModel.ModelMtl,
-                    ModelMaterial:dataModel.ModelMaterial
-                }
-            });
+        if(isUpdate && !mode) {
+            setMode(true)
         }
+        form.setFieldsValue({
+            Model: {
+                ModelName: model.ModelName,
+                ModelCategory: model.ModelCategory,
+                ModelDescription: model.ModelDescription,
+                ModelObj: model.ModelObj,
+                ModelMtl: model.ModelMtl,
+                ModelMaterial:model.ModelMaterial
+            }
+        });
     }
 
-    // upload file
     const normFile = (e) => {
         // console.log(e)
         if (Array.isArray(e)) {
@@ -61,24 +62,24 @@ export const ModelForm = ({dataModel}) => {
         return e && e.fileList;
     }
 
-
-    const handleUpload = async ({file} ) => {
-        // Create an object of formData 
-        const formData = new FormData();
-        // Update the formData object 
-        formData.append( 
-          "myFile", 
-          fileObj,
-        );
-       
-        // Details of the uploaded file 
-        console.log(fileObj); 
-       
-        // Request made to the backend api 
-        // Send formData object 
-        await axios.post("http://localhost:5000/ModelManagerPage/upload", formData).then(res => {
-            console.log(res)
-        })
+    const beforeUploadFile = ({file,onSuccess,filename}) => {
+        console.log(filename)
+        switch (filename) {
+            case MODEL.OBJ:
+                setFileObj(file);
+                break;
+            case MODEL.MTL:
+                setFileMtl(file)
+                break;
+            case MODEL.MATERIAL:
+                setFileMaterial(file)
+                break;
+            default:
+                break;
+        }
+        setTimeout(() => {
+            onSuccess('ok')
+        }, 1000);
     };
 
     const handleRemoveFile = () => {
@@ -88,39 +89,29 @@ export const ModelForm = ({dataModel}) => {
     const handleDowloadFile = (file) => {
         console.log(file)
     }
-
     // Button action 
-    const handleSave = (value) => {
+   
+    const handleSave = async (value) => {
+        const key = 'addModel';
         console.log("form value:",value);
-        
-        Promise.all(
-          [ModelService.createModel(value.Model)]
-        ).then(result => {
-            console.log(result)
-        })
-
+        message.loading({ content: 'Loading...', key});
+        dispatch(createModelAction(value.Model,fileObj,fileMaterial,fileMtl))
     }
+
     const handleCancel = () => {
-        form.setFieldsValue({
-            Model: {
-                ModelName: '',
-                ModelCategory: '',
-                ModelDescription: '',
-                ModelObj:[],
-                ModelMtl: [],
-                ModelMaterial:[]
-            }
-        });
+        dispatch(cancelModelAction());
+        cancelDisplayModel()
+        setMode(false)
     }
     const handleDelete = () => {
-        
+        if(!!model._id){
+            dispatch(deleteModelAction(model._id))
+            dispatch(findAllAction());
+        } else {
+            message.error({ content: 'please choose the model',duration:1});
+        }
+        setMode(false)
     }
-    const onFileChange = value => { 
-        console.log(value.file)
-        setFileMaterial(value.file)
-    }
-      // On file upload (click the upload button) 
-    
     return(
         <div className="form-container">
             <Row>
@@ -137,29 +128,28 @@ export const ModelForm = ({dataModel}) => {
                     form={form}
                     onFinish={handleSave}
                     >
-                        <Form.Item name={['Model',MODEL.NAME]} label="Model Name" rules={[{ required: true }]}>
-                            <Input className="form-input" />
+                        <Form.Item name={['Model',MODEL.NAME]} label="Model Name" value={model.ModelName} rules={[{ required: true }]}>
+                            <Input disabled={mode} />
                         </Form.Item>
                         <Form.Item name={['Model',MODEL.CATE]} label="Model Category" rules={[{ required: true }]}>
-                            <Input/>
+                            <Input disabled={mode}/>
                         </Form.Item>
                         <Form.Item name={['Model',MODEL.DES]} label="Model Description" rules={[{ required: true }]}>
-                            <Input/>
+                            <Input disabled={mode}/>
                         </Form.Item>
                         <Form.Item
                             name={['Model',MODEL.OBJ]}
                             label="File Object"
                             valuePropName="fileList"
                             getValueFromEvent={normFile}
-                            rules={[{ required: true }]}
+                            // rules={[{ required: true }]}
                         >
                             <Upload name={MODEL.OBJ }
-                            maxCount={1} 
-                            customRequest={handleUpload}
+                            maxCount={1}
+                            customRequest={beforeUploadFile}
                             onRemove={handleRemoveFile} 
                             onDownload={handleDowloadFile}
-                            onChange={onFileChange}
-                            showUploadList={{showDownloadIcon: true}}
+                            disabled={mode}
                             listType="picture">
                                 <Button>Click to upload</Button>
                             </Upload>
@@ -169,14 +159,14 @@ export const ModelForm = ({dataModel}) => {
                             label="File ModelMtl"
                             valuePropName="fileList"
                             getValueFromEvent={normFile}
-                            rules={[{ required: true }]}
+                            // rules={[{ required: true }]}
                         >
                             <Upload name={MODEL.MTL}
-                            maxCount={1} 
-                            customRequest={handleUpload}
+                            maxCount={1}
+                            customRequest={beforeUploadFile}
                             onRemove={handleRemoveFile}
                             onDownload={handleDowloadFile}
-                            showUploadList={{showDownloadIcon: true}}
+                            disabled={mode}
                             listType="picture">
                                 <Button>Click to upload</Button>
                             </Upload>
@@ -186,16 +176,14 @@ export const ModelForm = ({dataModel}) => {
                             label="File ModelMaterial"
                             valuePropName="fileList"
                             getValueFromEvent={normFile}
-                            
-                            rules={[{ required: true }]}
+                            // rules={[{ required: true }]}
                         >
                             <Upload name={MODEL.MATERIAL}
-                            maxCount={1} 
-                            customRequest={handleUpload}
+                            maxCount={1}
+                            customRequest={beforeUploadFile}
                             onRemove={handleRemoveFile}
                             onDownload={handleDowloadFile}
-                            onChange={onFileChange}
-                            showUploadList={{showDownloadIcon: true}}
+                            disabled={mode}
                             listType="picture">
                                 <Button>Click to upload</Button>
                             </Upload>
@@ -208,7 +196,7 @@ export const ModelForm = ({dataModel}) => {
                 </Col>
             </Row>
             <Row justify='end'>
-                <button className='btn primary' form="formModel" >Save</button>
+                {!mode && <button className='btn primary' form="formModel" >Save</button>}
                 <button className='btn secondary' onClick={handleDelete}>Delete</button>
                 <button className='btn primary' onClick={handleCancel}>Cancel</button>
             </Row>

@@ -14,25 +14,25 @@ function getBase64(file) {
       uid: '-1',
       name: 'image.png',
       status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      url: 'https://picsum.photos/200',
     },
     {
       uid: '-2',
       name: 'image.png',
       status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      url: 'https://picsum.photos/200',
     },
     {
       uid: '-3',
       name: 'image.png',
       status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      url: 'https://picsum.photos/200',
     },
     {
       uid: '-4',
       name: 'image.png',
       status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      url: 'https://picsum.photos/200',
     }
   ]
 

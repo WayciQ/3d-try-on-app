@@ -10,7 +10,7 @@ var express = require('express'),
   cors = require('cors'),
   path = require('path');
   require('dotenv').config()
-const buildPath = path.join(__dirname, '..', 'build');
+const buildPath = path.join(__dirname, 'build');
 app.use(express.static(buildPath));
 app.use(express.static(__dirname + '/public'));
 
@@ -20,9 +20,9 @@ mongoose.connect(process.env.DB_CONNECTION,{ useNewUrlParser: true,useUnifiedTop
 });
 autoIncrement.initialize(mongoose.connection);
 autoIncrement.Promise = global.Promise;
-// app.use(cors({ origin: '*' })).use(bodyParser.urlencoded({ extended: true }));
+app.use(cors({ origin: '*' })).use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ limit: '50mb' }));
-app.use(cors())
+// app.use(cors())
 var routes = require('./api/routes/index');
 routes(app);
 

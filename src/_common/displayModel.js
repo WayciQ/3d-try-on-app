@@ -76,6 +76,11 @@ export function displayModelToScence(objName) {
     controls.enableDamping = true;
     animate();
 }
+
+export function cancelDisplayModel() {
+    container = document.getElementById('demo');
+    container.removeChild(container.childNodes[0]);
+}
 function animate() {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);

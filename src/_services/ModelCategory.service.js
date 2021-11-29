@@ -2,13 +2,13 @@
 const header = 'Bearer blabla' ;
 const content = 'Content-Type';
 const Type = 'application/json';
-const API_URL = process.env.API_URL;
-export const ModelManagerService = {
+const API_URL = 'http://localhost:5000';
+export const ModelCategoryService = {
     FindbyModelCategoryId,
     FindAll,
-    createModelCategory,
-    updateModelCategory,
-    deleteModelCategory,
+    Create,
+    Update,
+    Delete,
 };
 
 function FindbyModelCategoryId(_id) {
@@ -33,7 +33,7 @@ function FindAll() {
     };
     return fetch(`${API_URL}/ModelCategory/FindAll`, requestOptions).then(handleResponse);
 }
-function createModelCategory(model) {
+function Create(model) {
     const auth = header;
     const headers = new Headers();
     headers.append(content, Type);
@@ -46,7 +46,7 @@ function createModelCategory(model) {
     return fetch(`${API_URL}/ModelCategory/create`, requestOptions).then(handleResponse);
 }
 
-function updateModelCategory(model) {
+function Update(model) {
     const auth = header;
     const headers = new Headers();
     headers.append(content, Type);
@@ -61,7 +61,7 @@ function updateModelCategory(model) {
     return fetch(`${API_URL}/ModelCategory/update`, requestOptions).then(handleResponse);
 }
 
-function deleteModelCategory(_id) {
+function Delete(_id) {
     const auth = header;
     const headers = new Headers();
     headers.append(content, Type);

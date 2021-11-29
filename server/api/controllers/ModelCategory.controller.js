@@ -1,6 +1,7 @@
-const multer = require('multer');
+
 const mongoose = require('mongoose');
 const ModelCategory = require('../models/ModelCategory.model');
+const Model = require('../models/Model.model');
 mongoose.Promise = global.Promise;
 
 const FindbyId = async function (req, res) {
@@ -14,15 +15,51 @@ const FindbyId = async function (req, res) {
     });
 }
 
-const FindAll = async function (req, res) {
+
+const FindAllCategory = async function () {
     const query = { };
-    ModelCategory.find(query, function (err, result) {
-        if (err) {
-            return res.status(400).send({ returnCode: -1, data: err });
-        } else {
-            return res.json({ returnCode: 1, data: result });
-        }
+    return new Promise((resolve,reject) => {
+        ModelCategory.find(query, function (err, result) {
+            resolve(result);
+            reject(err);
+        });
+    })
+}
+
+const FindByModelCategory = async function (name) {
+    return new Promise((resolve,reject) => {
+        const query = {ModelCategory: name};
+        const options = {
+            select: '_id ModelName ModelDescription',
+            limit: 100,
+          };
+        Model.paginate(query,options).then(function (result) {
+            resolve(result.docs);
+        })
+    })
+}
+const FindAll = async function (req, res) {
+    await FindAllCategory().then(result => {
+        let newCategory = [];
+        [...result].map(async (element,index) => {
+            let newCateItem = {
+                _id: element._id,
+                ModelCategoryName: element.ModelCategoryName,
+                Item:[]
+            };
+            await FindByModelCategory(element.ModelCategoryName).then(result => {
+                newCateItem.Item = !!result ? result : null;
+            })
+            newCategory.push(newCateItem);
+            if(index === result.length - 1){
+                return res.json({returnCode: 1, data:newCategory });
+            }
+        })
+    }).catch(err => {
+        return res.status(400).send({ data: err });
     });
+    
+    
 }
 
 const Create = async function (req, res) {
@@ -53,7 +90,7 @@ const Update = async function (req, res) {
 }
 
 const Delete = async function (req, res) {
-    const query = { _id: !!req.params.code ? req.params.code : 0 };
+    const query = { _id: !!req.params._id ? req.params._id : 0 };
     ModelCategory.findByIdAndDelete(query, function (err, result) {
         if (err) {
             return res.status(400).send({ returnCode: -1, data: err });
@@ -63,33 +100,32 @@ const Delete = async function (req, res) {
     });
 }
 
-var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-    cb(null, '../public')
-  },
-  filename: function (req, file, cb) {
-    console.log(file)
-    cb(null, Date.now() + '-' +file.originalname )
-  }
-})
+// var storage = multer.diskStorage({
+//     destination: function (req, file, cb) {
+//     cb(null, '../public')
+//   },
+//   filename: function (req, file, cb) {
+//     console.log(file)
+//     cb(null, Date.now() + '-' +file.originalname )
+//   }
+// })
 
-var upload = multer({ storage: storage }).single('file')
+// var upload = multer({ storage: storage }).single('file')
 
-const importToFile = async (req, res, next) => {
-    //console.log(req.file)
-    upload(req, res, function (err) {
-        if (err instanceof multer.MulterError) {
-            return res.status(500).json(err)
-        } else if (err) {
-            return res.status(500).json(err)
-        }
-        return res.status(200).send(req.file)
-    })
+// const importToFile = async (req, res, next) => {
+//     //console.log(req.file)
+//     upload(req, res, function (err) {
+//         if (err instanceof multer.MulterError) {
+//             return res.status(500).json(err)
+//         } else if (err) {
+//             return res.status(500).json(err)
+//         }
+//         return res.status(200).send(req.file)
+//     })
 
-};
+// };
 
 module.exports = {
-    importToFile,
     FindbyId,
     FindAll,
     Create,

@@ -18,7 +18,7 @@ let scene;
 let videoSprite;
 let windowWidth = 849;
 let windowHeight = 784;
-
+let isShowing = false;
 function setVideoContent(){
     camera = new THREE.PerspectiveCamera(50, video.videoWidth / video.videoHeight, 1, 5000);
 
@@ -97,6 +97,8 @@ function getFaceMask(){
 }
 
 export function IntializeThreejs(objName) {
+
+
     video = document.getElementById('tryon-video');
 
     container = document.getElementById('threejsContainer');
@@ -113,10 +115,12 @@ export function IntializeThreejs(objName) {
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(windowWidth, windowWidth * video.videoHeight / video.videoWidth);
-    
+    console.log(container.childNodes)
+    !!container.childNodes[1] && container.removeChild(container.childNodes[0])
     container.appendChild(renderer.domElement);
     window.addEventListener('resize', onWindowResize, false);
     animate();
+    isShowing = true;
 }
 
 function onWindowResize() {
@@ -217,4 +221,10 @@ async function renderPrediction() {
         faceObj.visible = false;
     }
     requestAnimationFrame(renderPrediction);
+}
+
+
+export function reset() {
+    glassesObj.visible = false;
+    faceObj.visible = false;
 }

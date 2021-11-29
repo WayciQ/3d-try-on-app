@@ -1,6 +1,6 @@
 module.exports = function (app) {
 	const ModelCategory = require('../controllers/ModelCategory.controller');
-	app.route('/ModelCategory/FindbyId')
+	app.route('/ModelCategory/FindbyId/:_id')
 		.get(ModelCategory.FindbyId);
 	app.route('/ModelCategory/FindAll')
 		.get(ModelCategory.FindAll);
@@ -8,6 +8,7 @@ module.exports = function (app) {
 		.post(ModelCategory.Create);
 	app.route('/ModelCategory/update')
 		.post(ModelCategory.Update);
-	app.route('/ModelCategory/delete')
+	app.route('/ModelCategory/delete/:_id')
 		.post(ModelCategory.Delete);
 }
+

@@ -1,90 +1,60 @@
-import React, {useState} from 'react';
-import { Tabs } from 'antd';
+import React, {useEffect} from 'react';
+import { Tabs, message } from 'antd';
 import { Card } from './Card'
 import { ModelCategoryForm } from './ModelCategoryForm';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteCategoryAction, findAllAction } from '../redux/action';
 const { TabPane } = Tabs;
 
-const cardData = [
-    {
-        id:1, 
-        name: "Glassed", 
-        item: [ 
-            {id:1, name:'Glass1', url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"},
-            {id:2, name:'Glass2', url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"},
-            {id:3, name:'Glass3', url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"},
-            {id:4, name:'Glass4', url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"},
-            {id:5, name:'Glass5', url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"},
-            {id:6, name:'Glass1', url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"},
-            {id:7, name:'Glass2', url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"},
-            {id:8, name:'Glass3', url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"},
-            {id:9, name:'Glass4', url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"},
-            {id:10, name:'Glass5', url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"},
-            {id:11, name:'Glass1', url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"},
-            {id:12, name:'Glass2', url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"},
-            {id:13, name:'Glass3', url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"},
-            {id:14, name:'Glass4', url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"},
-            {id:15, name:'Glass5', url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}
-        ]
-    },
-    {
-        id:2, 
-        name: "Jul", 
-        item: [ 
-            {id:1, name:'Glass1', url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"},
-            {id:2, name:'Glass2', url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"},
-            {id:3, name:'Glass3', url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"},
-            {id:4, name:'Glass4', url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"},
-            {id:5, name:'Glass5', url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}
-        ]
-    },
-    {
-        id:3, 
-        name: "Wayci", 
-        item: [ 
-            {id:1, name:'Glass1', url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"},
-            {id:2, name:'Glass2', url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"},
-            {id:3, name:'Glass3', url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"},
-            {id:4, name:'Glass4', url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"},
-            {id:5, name:'Glass5', url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"},
-            {id:6, name:'Glass1', url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"},
-            {id:7, name:'Glass2', url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"},
-            {id:8, name:'Glass3', url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"},
-            {id:9, name:'Glass4', url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"},
-            {id:10, name:'Glass5', url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}
-        ]
-    }
-]
+export const TabsSelect = ({managerMode}) => {
+    useEffect(() => {
+        handleRefreshTab();
+    },[])
 
-export const TabsSelect = ({haveAddCategory}) => {
-    const [tabData, setTabData] = useState(cardData);
+    const handleRefreshTab = () => {
+        dispatch(findAllAction())
+    }
+    const {dataCategory} = useSelector(state => state.ModelManagerReducer);
+    const dispatch = useDispatch();
+    const handleDeleteCategory = (e) => {
+        const key = 'deleteCategory';
+        message.loading({ content: 'Loading...', key});
+        const id = e.target.attributes.getNamedItem('data-id').value;
+        dispatch(deleteCategoryAction(id));
+    }
 
     return(
         <>
             <Tabs defaultActiveKey="1" type="card" size="large" className="select-model">
                 {
-                    haveAddCategory ?
-                    tabData.map(tab => 
-                        <TabPane tab={tab.name} className="tab" key={tab.id}>
+                    managerMode ?
+                    !!dataCategory && dataCategory.map(tab => 
+                        <TabPane tab={tab.ModelCategoryName} className="tab" key={tab._id}>
                             {
-                                !!tab.item && tab.item.length !== 0 ?
-                                tab.item.map(item => <Card name={item.name} url={item.url} key={item.id} />) 
-                                : (<button className='btn secondary'>Delete</button>)
+                                !!tab.Item && tab.Item.length !== 0 ?
+                                tab.Item.map(item => 
+                                    <Card managerMode={managerMode} idData={item._id} name={item.ModelName} url={item.url} key={item._id} />
+                                )
+                                : (<button data-id={tab._id} onClick={handleDeleteCategory} className='btn secondary'>Delete</button>)
                             }
                         </TabPane>
                     )
                     :
-                    tabData.map(tab => !!tab.item && tab.item.length > 0 ?
-                        <TabPane tab={tab.name} className="tab" key={tab.id}>
-                            {tab.item.map(item => <Card name={item.name} url={item.url} key={item.id} />)}
-                        </TabPane>: null
+                    !!dataCategory && dataCategory.map(tab => 
+                        !!tab.Item && tab.Item.length > 0 &&
+                        <TabPane tab={tab.ModelCategoryName} className="tab" key={tab._id}>
+                            {tab.Item.map(item => 
+                            <Card managerMode={managerMode} idData={item._id} name={item.ModelName} url={item.url} key={item._id} />)}
+                        </TabPane>
                     )
                 }
-                {haveAddCategory ? 
+                {managerMode &&
                     <TabPane tab="+" className="tab" key="addCate">
                         <ModelCategoryForm />
-                    </TabPane> : null
+                    </TabPane>
                 }
             </Tabs>
         </>
     )
 }
+

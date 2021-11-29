@@ -6,9 +6,10 @@ const API_URL = 'http://localhost:5000';
 export const ModelService = {
     FindByModelId,
     FindByModelCategory,
-    createModel,
-    updateModel,
-    deleteModel,
+    Create,
+    Update,
+    Delete,
+    uploadFile,
 };
 
 function FindByModelId(_id) {
@@ -22,7 +23,7 @@ function FindByModelId(_id) {
     };
     return fetch(`${API_URL}/Model/FindById/${_id}`, requestOptions).then(handleResponse);
 }
-function FindByModelCategory(_id) {
+function FindByModelCategory(id) {
     const auth = header;
     const headers = new Headers();
     headers.append(content, Type);
@@ -31,9 +32,9 @@ function FindByModelCategory(_id) {
         headers,
         method: 'GET'
     };
-    return fetch(`${API_URL}/Model/FindByModelCategory/${_id}`, requestOptions).then(handleResponse);
+    return fetch(`${API_URL}/Model/FindByModelCategory/${id}`, requestOptions).then(handleResponse);
 }
-function createModel(model) {
+function Create(model) {
     const auth = header;
     const headers = new Headers();
     headers.append(content, Type);
@@ -46,7 +47,7 @@ function createModel(model) {
     return fetch(`${API_URL}/Model/create`, requestOptions).then(handleResponse);
 }
 
-function updateModel(model) {
+function Update(model) {
     const auth = header;
     const headers = new Headers();
     headers.append(content, Type);
@@ -61,7 +62,7 @@ function updateModel(model) {
     return fetch(`${API_URL}/Model/update`, requestOptions).then(handleResponse);
 }
 
-function deleteModel(_id) {
+function Delete(_id) {
     const auth = header;
     const headers = new Headers();
     headers.append(content, Type);
@@ -73,6 +74,19 @@ function deleteModel(_id) {
     return fetch(`${API_URL}/Model/delete/${_id}`, requestOptions).then(handleResponse);
 }
 
+function uploadFile(file) {
+    const auth = header;
+    const headers = new Headers();
+    headers.append(content, Type);
+    headers.append('Authorization', auth);
+    const requestOptions = {
+        headers,
+        method: 'POST',
+        body: JSON.stringify(file)
+    };
+    console.log(file)
+    return fetch(`${API_URL}/Model/uploadFile`, requestOptions).then(handleResponse);
+}
 function handleResponse(response) {
     return response.text().then(text => {
         const data = text && JSON.parse(text);

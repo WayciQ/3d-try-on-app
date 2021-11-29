@@ -19,6 +19,7 @@
     "express": "^4.16.4",
     "express-winston": "^4.0.5",
     "firebase-admin": "^9.7.0",
+    "formidable": "^2.0.1",
     "ftp-client": "^0.2.2",
     "googleapis": "^91.0.0",
     "http-status": "^1.5.0",
