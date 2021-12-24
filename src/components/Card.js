@@ -3,7 +3,7 @@ import { findByModelIdAction } from '../redux/action';
 import { useDispatch } from 'react-redux';
 import {displayModelToScence} from "../_common/displayModel"
 import {
-    IntializeEngine, IntializeThreejs,
+    IntializeThreejs,setObjToScene
 } from '../_common/render.js';
 export const Card = ({name, url, idData, managerMode}) => {
     const dispatch = useDispatch();
@@ -12,34 +12,16 @@ export const Card = ({name, url, idData, managerMode}) => {
         url: "https://picsum.photos/200"
     }
 
-    async function init(name) {
-        var video = document.getElementById('tryon-video');
+    
 
-        await navigator.mediaDevices.getUserMedia({
-            'audio': false,
-            'video': {
-                facingMode: 'user',
-            }
-        }).then(stream => {
-            video.srcObject = stream;
-        });
 
-        video.oncanplay = (e) => {
-            console.log(e)
-            video.play();
-            IntializeThreejs(name);
-            IntializeEngine();
-        }
-        
-    }
     const handleClick = () => {
-        var video = document.getElementById('tryon-video');
         dispatch(findByModelIdAction(idData))
         if(managerMode) {
             displayModelToScence(name)
         } else {
-            video.pause()
-            init(name)
+            IntializeThreejs()
+            setObjToScene(name);
         }
     }
     return(

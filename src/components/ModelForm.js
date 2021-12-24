@@ -13,14 +13,6 @@ const formItemLayout = {
     },
 };
 
-function getBase64(file) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = error => reject(error);
-    });
-  }
 
   
 export const ModelForm = () => {
@@ -55,7 +47,7 @@ export const ModelForm = () => {
     }
 
     const normFile = (e) => {
-        // console.log(e)
+        console.log(e)
         if (Array.isArray(e)) {
             return e;
         };

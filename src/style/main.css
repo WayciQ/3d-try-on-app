@@ -1,0 +1,137 @@
+.container {
+  width: 100%;
+  padding: 25px 25px;
+}
+
+.try-on-zone {
+  width: 100%;
+  height: 80vh;
+  margin-top: 50px;
+  background-color: setColor(gray);
+}
+
+.try-on-zone #tryon-video {
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+.try-on-zone #threejsContainer {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.try-on-zone #threejsContainer canvas {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.try-on-zone .videosource {
+  display: none;
+}
+
+.picture-wall {
+  margin-top: 25px;
+}
+
+.select-model {
+  background-color: setColor(gray);
+}
+
+.select-model .ant-tabs-tab {
+  min-width: 100px;
+}
+
+.select-model .ant-tabs-tab .ant-tabs-tab-btn {
+  padding: 0 20px;
+}
+
+.select-model .tab {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  max-height: 70vh;
+  overflow: auto;
+}
+
+.select-model .card {
+  width: 150px;
+  height: 180px;
+  border: solid 2px setColor(light);
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+  padding: 10px;
+  margin: 20px;
+  cursor: pointer;
+}
+
+.select-model .card img {
+  border-top-right-radius: inherit;
+  border-top-left-radius: inherit;
+  width: 100%;
+}
+
+.select-model .card p {
+  width: 100%;
+  word-wrap: normal;
+  overflow: hidden;
+  margin-top: 2px;
+  height: 25px;
+  color: setColor(light);
+  font-weight: bold;
+}
+
+.select-model .card:hover {
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+}
+
+.form-title {
+  font-size: 28px;
+  font-weight: bold;
+  padding: 5px 25px;
+  margin-bottom: 25px;
+  color: setColor(yellow);
+  border-bottom: solid 2px setColor(light);
+}
+
+.form label {
+  font-size: 14px;
+  font-weight: bold;
+  color: setColor(white);
+}
+
+.form input {
+  background: setColor(gray);
+  border: none;
+  border-bottom: solid 2px setColor(light);
+  color: setColor(light);
+}
+
+.form input:focus {
+  outline: solid 2px setColor(gray);
+  border: none;
+  border-bottom: solid 2px setColor(light);
+}
+
+.demo-item {
+  width: 100%;
+  background: setColor(light);
+  height: 40vh;
+  min-height: 40vh;
+}
+/*# sourceMappingURL=main.css.map */

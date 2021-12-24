@@ -1,4 +1,4 @@
-import { MODEL_CATEGORY, MODEL } from "../constant/ModelManager.constant";
+import { MODEL_CATEGORY } from "../constant/ModelManager.constant";
 
 const stateDefault = {
     dataCategory: [],

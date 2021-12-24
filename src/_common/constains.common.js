@@ -8,7 +8,6 @@ const MODEL = {
 }
 
 
-
 export {
     MODEL
 }

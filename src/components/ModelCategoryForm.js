@@ -1,6 +1,6 @@
 import React from 'react';
 import {Row, Col, Form, Input, message } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { createCategoryAction } from '../redux/action';
 const formItemLayout = {
     labelCol: {

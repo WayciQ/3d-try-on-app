@@ -10,7 +10,7 @@ var glassesObj;
 var faceObj;
 var triangle;
 var bg;
-var video;
+var video = document.getElementById('tryon-video');
 let renderer;
 let camera;
 var container;
@@ -18,7 +18,6 @@ let scene;
 let videoSprite;
 let windowWidth = 849;
 let windowHeight = 784;
-let isShowing = false;
 function setVideoContent(){
     camera = new THREE.PerspectiveCamera(50, video.videoWidth / video.videoHeight, 1, 5000);
 
@@ -66,7 +65,7 @@ function setTheLights(){
     scene.add(lightAmb);
 }
 
-function setObjToScene(objName){
+export function setObjToScene(objName){
 
     var mtlLoader = new MTLLoader();
     mtlLoader.setMaterialOptions({side:THREE.DoubleSide});
@@ -97,10 +96,7 @@ function getFaceMask(){
 }
 
 export function IntializeThreejs(objName) {
-
-
-    video = document.getElementById('tryon-video');
-
+    video = document.getElementById('tryon-video')
     container = document.getElementById('threejsContainer');
     setVideoContent();
 
@@ -110,17 +106,15 @@ export function IntializeThreejs(objName) {
 
     getFaceMask();
     
-    setObjToScene(objName);
+    setObjToScene(objName)
 
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(windowWidth, windowWidth * video.videoHeight / video.videoWidth);
-    console.log(container.childNodes)
-    !!container.childNodes[1] && container.removeChild(container.childNodes[0])
+    !!container.childNodes[1] && container.removeChild(container.childNodes[1])
     container.appendChild(renderer.domElement);
     window.addEventListener('resize', onWindowResize, false);
     animate();
-    isShowing = true;
 }
 
 function onWindowResize() {
@@ -150,7 +144,7 @@ async function renderPrediction() {
     if (predictions.length > 0) {
 
         faceObj.visible = true;
-        glassesObj.visible = true;
+        // glassesObj.visible = true;
         for (let i = 0; i < predictions.length; i++) {
             const points = predictions[i].scaledMesh;
 
