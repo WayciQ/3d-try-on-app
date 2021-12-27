@@ -2,14 +2,14 @@ import React, { useEffect, useRef } from "react";
 
 import { Row, Col } from "antd";
 import { Header, Footer, Body, TabsSelect, PictureWall } from "../components";
-//import captureWebsite from 'capture-website';
 import { IntializeThreejs, IntializeEngine } from "../_common/render";
+import axios from "axios";
 
 export const TryOnPage = () => {
   const tryon = useRef(null);
   const handleCapture = async () => {
-    //await captureWebsite.file('http://localhost:3000/ModelManagerPage', 'screenshot.png');
-    alert("take photo");
+    const response = await axios.get("http://localhost:5000/Model/capture");
+    console.log(response.data);
   };
 
   useEffect(() => {

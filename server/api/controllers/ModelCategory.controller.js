@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const ModelCategory = require("../models/ModelCategory.model");
 const Model = require("../models/Model.model");
+const puppeteer = require("puppeteer");
+const screenshot = require("screenshot-desktop");
 mongoose.Promise = global.Promise;
 
 const FindbyId = async function (req, res) {
@@ -28,7 +30,7 @@ const FindByModelCategory = async function (name) {
   return new Promise((resolve, reject) => {
     const query = { ModelCategory: name };
     const options = {
-      select: "_id ModelName ModelDescription",
+      select: "_id ModelName ModelDescription ModelImage",
       limit: 100,
     };
     Model.paginate(query, options).then(function (result) {
@@ -122,8 +124,19 @@ const Delete = async function (req, res) {
 //     })
 
 // };
+const Capture = async (req, res) => {
+  screenshot({ format: "png", filename: "./public/shot.png" })
+    .then((img) => {
+      return res.json({ returnCode: 1 });
+    })
+    .catch((err) => {
+      return res.status(400).send({ returnCode: -1, data: err });
+    });
+  console.log("alo");
+};
 
 module.exports = {
+  Capture,
   FindbyId,
   FindAll,
   Create,
