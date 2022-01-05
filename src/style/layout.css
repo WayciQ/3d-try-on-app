@@ -1,10 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;600&display=swap");
 * {
   -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
 }
@@ -13,7 +14,7 @@ body {
   background-color: #ffffff;
   height: 100vh;
   padding-bottom: 40px;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   background-color: setColor(gray);
 }
 
@@ -23,7 +24,7 @@ body {
   background-color: setColor(light);
   color: setColor(black);
   -webkit-box-shadow: 0 3px 10px rgba(255, 255, 255, 0.5);
-          box-shadow: 0 3px 10px rgba(255, 255, 255, 0.5);
+  box-shadow: 0 3px 10px rgba(255, 255, 255, 0.5);
 }
 
 .header .logo {
@@ -75,9 +76,9 @@ body {
 
 .btn:not(.disable):hover {
   -webkit-transform: scale(1.1);
-          transform: scale(1.1);
+  transform: scale(1.1);
   -webkit-box-shadow: 0 3px 10px rgba(255, 255, 255, 0.5);
-          box-shadow: 0 3px 10px rgba(255, 255, 255, 0.5);
+  box-shadow: 0 3px 10px rgba(255, 255, 255, 0.5);
 }
 
 .btn.secondary {

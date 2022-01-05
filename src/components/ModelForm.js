@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Row, Col, Form, Upload, Input, Button, message } from "antd";
+import React, { useState, useEffect, useRef } from "react";
+import { Row, Col, Form, Upload, Input, Button, message, Select } from "antd";
 import { MODEL } from "../_common/constains.common";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -17,6 +17,7 @@ const formItemLayout = {
     span: 14,
   },
 };
+const { Option } = Select;
 
 export const ModelForm = () => {
   const [form] = Form.useForm();
@@ -26,12 +27,13 @@ export const ModelForm = () => {
   const [fileMaterial, setFileMaterial] = useState({});
   const [fileImg, setFileImg] = useState({});
   const { model, isUpdate } = useSelector((state) => state.ModelReducer);
+  const { dataCategory } = useSelector((state) => state.ModelManagerReducer);
   const dispatch = useDispatch();
   // display by props
   useEffect(() => {
     handleDisplayValue();
   }, [model]);
-
+  const demo = useRef(null);
   const handleDisplayValue = () => {
     if (isUpdate && !mode) {
       setMode(true);
@@ -49,6 +51,15 @@ export const ModelForm = () => {
     });
   };
 
+  const renderCategory = () => {
+    return dataCategory.map((item, index) => {
+      return (
+        <Option value={item.ModelCategoryName} key={item._id}>
+          {item.ModelCategoryName}
+        </Option>
+      );
+    });
+  };
   const normFile = (e) => {
     console.log(e);
     if (Array.isArray(e)) {
@@ -109,6 +120,8 @@ export const ModelForm = () => {
       message.error({ content: "please choose the model", duration: 1 });
     }
     setMode(false);
+    dispatch(cancelModelAction());
+    cancelDisplayModel();
   };
   return (
     <div className="form-container">
@@ -130,16 +143,23 @@ export const ModelForm = () => {
               name={["Model", MODEL.NAME]}
               label="Model Name"
               value={model.ModelName}
-              rules={[{ required: true }]}
+              rules={[{ required: true, message: "please field Name" }]}
             >
               <Input disabled={mode} />
             </Form.Item>
             <Form.Item
               name={["Model", MODEL.CATE]}
               label="Model Category"
-              rules={[{ required: true }]}
+              rules={[{ required: true, message: "please select Category" }]}
             >
-              <Input disabled={mode} />
+              <Select
+                placeholder=""
+                allowClear={true}
+                disabled={mode}
+                // onChange={handleSelectHeThongRap}
+              >
+                {renderCategory()}
+              </Select>
             </Form.Item>
             <Form.Item
               name={["Model", MODEL.DES]}
@@ -153,6 +173,8 @@ export const ModelForm = () => {
               label="File Object"
               valuePropName="fileList"
               getValueFromEvent={normFile}
+              rules={[{ required: true, message: "please upload file obj" }]}
+
               // rules={[{ required: true }]}
             >
               <Upload
@@ -172,7 +194,7 @@ export const ModelForm = () => {
               label="File Mtl"
               valuePropName="fileList"
               getValueFromEvent={normFile}
-              // rules={[{ required: true }]}
+              rules={[{ required: true, message: "please upload file mtl" }]}
             >
               <Upload
                 name={MODEL.MTL}
@@ -192,6 +214,7 @@ export const ModelForm = () => {
               valuePropName="fileList"
               getValueFromEvent={normFile}
               // rules={[{ required: true }]}
+              rules={[{ required: true, message: "please upload file mtl" }]}
             >
               <Upload
                 name={MODEL.MATERIAL}
@@ -210,6 +233,7 @@ export const ModelForm = () => {
               label="File Image"
               valuePropName="fileList"
               getValueFromEvent={normFile}
+              rules={[{ required: true, message: "please upload file image" }]}
               // rules={[{ required: true }]}
             >
               <Upload
@@ -227,7 +251,7 @@ export const ModelForm = () => {
           </Form>
         </Col>
         <Col span={10} offset={2}>
-          <div className="demo-item" id="demo">
+          <div className="demo-item" ref={demo} id="demo">
             {" "}
           </div>
         </Col>

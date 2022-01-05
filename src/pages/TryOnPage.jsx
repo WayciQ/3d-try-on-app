@@ -3,15 +3,19 @@ import React, { useEffect, useRef } from "react";
 import { Row, Col } from "antd";
 import { Header, Footer, Body, TabsSelect, PictureWall } from "../components";
 import { IntializeThreejs, IntializeEngine } from "../_common/render";
-import axios from "axios";
-
+import { useCapture } from "react-capture";
+import { DetailModel } from "../components";
+import { useDispatch, useSelector } from "react-redux";
+const { snap } = useCapture();
 export const TryOnPage = () => {
   const tryon = useRef(null);
+  const { model } = useSelector((state) => state.ModelReducer);
   const handleCapture = async () => {
-    const response = await axios.get("http://localhost:5000/Model/capture");
-    console.log(response.data);
+    // const response = await axios.get("http://localhost:5000/Model/capture");
+    // console.log(response.data);
+    snap(tryon, { file: "download.png" });
   };
-
+  console.log(model);
   useEffect(() => {
     init();
   }, []);
@@ -54,11 +58,17 @@ export const TryOnPage = () => {
           </Col>
           <Col offset={1} span={3}>
             <div>
-              {/* <DetailModel name="Glassed" descripte="Kinh cho nguoi mu" color="Blue"/> */}
               <button onClick={handleCapture} className="primary btn">
                 Take photo
               </button>
-              <PictureWall />
+              {!!model && (
+                <DetailModel
+                  name={model.ModelName}
+                  descripte={model.ModelDescription}
+                  category={model.ModelDescription}
+                />
+              )}
+              {/* <PictureWall /> */}
             </div>
           </Col>
         </Row>

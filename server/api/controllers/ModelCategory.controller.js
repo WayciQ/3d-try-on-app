@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const ModelCategory = require("../models/ModelCategory.model");
 const Model = require("../models/Model.model");
-const puppeteer = require("puppeteer");
 const screenshot = require("screenshot-desktop");
 mongoose.Promise = global.Promise;
 
@@ -127,7 +126,8 @@ const Delete = async function (req, res) {
 const Capture = async (req, res) => {
   screenshot({ format: "png", filename: "./public/shot.png" })
     .then((img) => {
-      return res.json({ returnCode: 1 });
+      console.log(img);
+      return res.json({ returnCode: 1, data: img });
     })
     .catch((err) => {
       return res.status(400).send({ returnCode: -1, data: err });

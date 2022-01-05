@@ -22,12 +22,10 @@ export const TabsSelect = ({ managerMode }) => {
     const id = e.target.attributes.getNamedItem("data-id").value;
     dispatch(deleteCategoryAction(id));
   };
-
-  console.log(dataCategory);
   return (
     <>
       <Tabs
-        defaultActiveKey="1"
+        defaultActiveKey="6"
         type="card"
         size="large"
         className="select-model"
