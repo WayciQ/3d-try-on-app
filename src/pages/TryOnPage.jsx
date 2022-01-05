@@ -9,11 +9,12 @@ import { useDispatch, useSelector } from "react-redux";
 const { snap } = useCapture();
 export const TryOnPage = () => {
   const tryon = useRef(null);
+  const virtual = useRef(null);
   const { model } = useSelector((state) => state.ModelReducer);
   const handleCapture = async () => {
     // const response = await axios.get("http://localhost:5000/Model/capture");
     // console.log(response.data);
-    snap(tryon, { file: "download.png" });
+    snap(virtual, { file: "screenshot.png" });
   };
   console.log(model);
   useEffect(() => {
@@ -50,7 +51,7 @@ export const TryOnPage = () => {
             <TabsSelect managerMode={false} />
           </Col>
           <Col span={11}>
-            <div className="try-on-zone">
+            <div ref={virtual} className="try-on-zone">
               <div id="threejsContainer">
                 <video ref={tryon} id="tryon-video"></video>
               </div>
@@ -61,7 +62,7 @@ export const TryOnPage = () => {
               <button onClick={handleCapture} className="primary btn">
                 Take photo
               </button>
-              {!!model && (
+              {!!model.ModelName && (
                 <DetailModel
                   name={model.ModelName}
                   descripte={model.ModelDescription}

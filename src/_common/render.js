@@ -80,6 +80,7 @@ export function setObjToScene(objName) {
   mtlLoader.load(
     process.env.PUBLIC_URL + "/obj/" + objName + ".mtl",
     (materials) => {
+      console.log(materials);
       materials.preload();
       const objLoader = new OBJLoader();
       objLoader.setMaterials(materials);
